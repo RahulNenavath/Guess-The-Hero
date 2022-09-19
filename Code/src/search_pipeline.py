@@ -43,6 +43,8 @@ class SearchDescriptionPipeline:
         self.description_data = pd.read_parquet(self.description_dataset_path)
         self.hnsw_index = hnswlib.Index(space = 'cosine', dim = self.embedding_size)
         
+        logging.info(f'Path to Dataset: {self.description_dataset_path}\n Path to HNSW Index: {self.hnsw_index_path}')
+        
         logging.info("Loading HNSW index for Semantic Search")
         self.hnsw_index.load_index(self.hnsw_index_path)
         
