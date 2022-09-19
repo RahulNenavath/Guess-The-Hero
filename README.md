@@ -30,6 +30,6 @@ The assumption is this constructed superhero `description` will have `rich infor
 * hnswlib - 0.6.2 - Hierarchical Navigable Small World for Approximate Nearest Neightbour Search <br>
 * Sentence Transformers - 2.2.2 <br>
 * Text Distance - 4.5.0 <br>
-* AWS  <br>
+* AWS ECR & Lambda <br>
 * Docker  <br>
-* CI/CD  <br>
+* CI/CD - Push to GitHub to deploy on AWS  <br>

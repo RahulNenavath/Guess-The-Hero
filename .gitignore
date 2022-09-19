@@ -5,7 +5,5 @@ __pycache__/
 venv/
 .idea/
 .vscode/
-Data/
-Artifacts/
 .DS_Store
 Secrets/
