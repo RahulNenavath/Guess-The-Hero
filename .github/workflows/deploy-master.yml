@@ -21,12 +21,12 @@ jobs:
           registry: ghcr.io
           username: "RahulNenavath"
           password: ${{ secrets.ACCOUNT_PAT }}
-          repository: RahulNenavath/Guess-The-Hero
+          repository: rahulnenavath/guess-the-hero
           tags: prod
       - name: "Pull:dockerimage"
         uses: fifsky/ssh-action@master
         with:
-          command: echo ${{ secrets.ACCOUNT_PAT }} | docker login ghcr.io -u RahulNenavath --password-stdin && docker image prune -f && docker pull ghcr.io/RahulNenavath/Guess-The-Hero && docker-compose up -d
+          command: echo ${{ secrets.ACCOUNT_PAT }} | docker login ghcr.io -u RahulNenavath --password-stdin && docker image prune -f && docker pull ghcr.io/rahulnenavath/guess-the-hero && docker-compose up -d
           host: ${{ secrets.SERVER_EC2_HOSTNAME }}
           user: ${{ secrets.SERVER_EC2_USERNAME }}
           key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
