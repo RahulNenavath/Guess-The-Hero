@@ -12,6 +12,6 @@ COPY Code/src/ .
 COPY Artifacts/ .
 COPY Data/ .
 
-COPY Code/src/app.py ${LAMBDA_TASK_ROOT}
+COPY app.py ${LAMBDA_TASK_ROOT}
 
 CMD ["app.handler"]
