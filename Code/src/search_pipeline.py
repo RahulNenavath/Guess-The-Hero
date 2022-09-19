@@ -29,11 +29,8 @@ class SearchDescriptionPipeline:
         self.embedding_model_name = embedding_model_name
         self.hardware_device = hardware_device
         self.current_directory = pathlib.Path().resolve()
-        self.parent_directory = self.current_directory.parent.parent
-        self.artifact_directory = os.path.join(self.parent_directory, 'Artifacts')
-        self.data_directory = os.path.join(self.parent_directory, 'Data')
-        self.description_dataset_path = os.path.join(self.data_directory, 'superhero_desc_updated.gzip')
-        self.hnsw_index_path = os.path.join(self.artifact_directory, 'hnswlib.index')
+        self.description_dataset_path = os.path.join(self.current_directory, 'superhero_desc_updated.gzip')
+        self.hnsw_index_path = os.path.join(self.current_directory, 'hnswlib.index')
         
         logging.info(f'Loading Artifacts ...')
         
