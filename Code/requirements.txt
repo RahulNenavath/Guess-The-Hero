@@ -1,0 +1,5 @@
+sentence-transformers==2.2.2
+hnswlib==0.6.2
+pandas==1.0.0
+numpy==1.23.3
+textdistance==4.5.0
