@@ -26,7 +26,7 @@ jobs:
       - name: "Pull:dockerimage"
         uses: fifsky/ssh-action@master
         with:
-          command: echo ${{ secrets.ACCOUNT_PAT }} | docker login ghcr.io -u RahulNenavath --password-stdin && docker image prune -f && docker pull ghcr.io/rahulnenavath/guess-the-hero && docker-compose up -d
+          command: echo ${{ secrets.ACCOUNT_PAT }} | docker login ghcr.io -u RahulNenavath --password-stdin && docker image prune -f && docker pull ghcr.io/rahulnenavath/guess-the-hero:prod && docker-compose up -d
           host: ${{ secrets.SERVER_EC2_HOSTNAME }}
           user: ${{ secrets.SERVER_EC2_USERNAME }}
           key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
