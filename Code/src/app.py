@@ -1,79 +1,36 @@
-import json
-import traceback
+import uvicorn
 import logging
+import traceback
+from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from search_pipeline import SearchDescriptionPipeline
 
 
 logging.basicConfig(level=logging.INFO)
+app = FastAPI()
 search_module = SearchDescriptionPipeline()
 
-def handler(event, context):
-    
-    # AWS Lambda Function Handler
+@app.get("/ping")
+def ping_response():
+    return jsonable_encoder({"status": "Server Running"})
 
-    if event['rawPath'] == '/':
-        return {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({
-                "Service": "Superhero Guessing API",
-                "Status": "Active"
-            })
-        }
 
-    elif event['rawPath'] == '/ping':
-        return {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({
-                "Service": "Superhero Guessing API",
-                "Status": "Active",
-                "Ping": "Success"
-            })
-        }
+@app.post("/guess_hero")
+async def event_ingestion(request: Request):
+    try:
+        request_body = await request.json()
+        challenge = request_body.get("challenge")
+        if challenge:
+            return jsonable_encoder({"challenge": challenge})
 
-    elif event['rawPath'] == '/guess_hero':
+        superhero_names = search_module.run_pipeline(description_text=request_body.get('description'))
+        superhero_names = ",".join(superhero_names)
+        return jsonable_encoder({"Superhero_Guess": superhero_names})
 
-        request_body = json.loads(event['body'])
-        request_description = str(request_body['description'])
+    except Exception as e:
+        logging.error(f"Error in running the pipeline")
+        return jsonable_encoder({"Error": traceback.format_exc()})
 
-        try:
-            superhero_names = search_module.run_pipeline(description_text=request_description)
-            superhero_names = ",".join(superhero_names)
 
-            return {
-                "statusCode": 200,
-                "headers": {
-                    "Content-Type": "application/json"
-                },
-                "body": json.dumps({
-                    "enriched_text": superhero_names,
-                })
-            }
-        except Exception as e:
-            return {
-                "statusCode": 200,
-                "headers": {
-                    "Content-Type": "application/json"
-                },
-                "body": json.dumps({
-                    "Error": str(traceback.format_exc),
-                    "Exception": str(e)
-                })
-            }
-    else:
-        return {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({
-                "Service": "Text Enrichment API",
-                "Status": "Active",
-                "Message": "API method not allowed"
-            })
-        }
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0', port=9000)

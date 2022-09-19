@@ -1,17 +1,25 @@
-FROM public.ecr.aws/lambda/python:3.8
+FROM python:3.8
 
-RUN yum install -y gcc gcc-c++ build-essential mono-mcs
+RUN apt-get update
+
+RUN apt-get install -y build-essential mono-mcs
+
+ENV VIRTUAL_ENV=/opt/venv
+
+RUN python3 -m venv $VIRTUAL_ENV
+
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY Code/requirements.txt .
 
-RUN /var/lang/bin/python3.8 -m pip install --upgrade pip
+RUN pip install --upgrade pip
 
-RUN pip install --upgrade -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
+RUN pip install -r requirements.txt
 
-RUN python3 -c "from sentence_transformers import SentenceTransformer; model = SentenceTransformer('all-mpnet-base-v2')" --target "${LAMBDA_TASK_ROOT}"
+COPY Code/src/ .
+COPY Artifacts/ .
+COPY Data/ .
 
-COPY Code/src/ ${LAMBDA_TASK_ROOT}
-COPY Artifacts/ ${LAMBDA_TASK_ROOT}
-COPY Data/ ${LAMBDA_TASK_ROOT}
+EXPOSE 9000
 
-CMD ["app.handler"]
+CMD ["python", "app.py"]
