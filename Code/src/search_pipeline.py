@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class SearchDescriptionPipeline:
+    """ Search Engine Pipeline """
     def __init__(self, 
                  semantic_search_topk:int=10,
                  keyword_search_topk:int=2,

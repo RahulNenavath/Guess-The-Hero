@@ -8,6 +8,8 @@ logging.basicConfig(level=logging.INFO)
 search_module = SearchDescriptionPipeline()
 
 def handler(event, context):
+    
+    # AWS Lambda Function Handler
 
     if event['rawPath'] == '/':
         return {
