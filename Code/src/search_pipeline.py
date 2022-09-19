@@ -46,6 +46,8 @@ class SearchDescriptionPipeline:
         logging.info("Loading HNSW index for Semantic Search")
         self.hnsw_index.load_index(self.hnsw_index_path)
         
+        logging.info(f'Loaded HNSW Index. Now Setting  EFT')
+        
         # Controlling the recall by setting ef:
         # ef should always be > top_k_hits
         self.hnsw_index.set_ef(50)

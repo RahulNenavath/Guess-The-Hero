@@ -4,7 +4,7 @@ services:
 
   api_service:
     container_name: api_service
-    image: ghcr.io/RahulNenavath/Guess-The-Hero:prod
+    build: .
     volumes:
       - ./api_service:/src/main
     restart: always
@@ -12,19 +12,6 @@ services:
       - 9000:9000
     networks:
       - dockerinternalnetwork
-
-  caddy:
-      image: caddy:alpine
-      container_name: caddy
-      depends_on:
-            - api_service
-      ports:
-            - "443:443"
-      volumes:
-             - ./caddy/data:/data
-             - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      networks:
-             - dockerinternalnetwork
 
 networks:
   dockerinternalnetwork:
