@@ -1,7 +1,7 @@
 # Introduction:
 ### Title: Guess the Super Hero!
 ### Problem Statement:
-Given a description of a `superhero`, return the superhero name <br>
+Given a description of a `superhero`, return two guessed superhero names <br>
 ### Example Input & Output:
 Input description: `Knight of Dark, Gotham protector, Smart, Intelligent, martial artist, master of dark, educated` <br>
 Output: `Batman`
