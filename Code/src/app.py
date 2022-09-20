@@ -1,6 +1,7 @@
 import uvicorn
 import logging
 import traceback
+import gradio as gr
 from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
 from search_pipeline import SearchDescriptionPipeline
@@ -10,9 +11,19 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI()
 search_module = SearchDescriptionPipeline()
 
+io = gr.Interface(lambda x: "Hello, " + x + "!", "textbox", "textbox")
+gradio_app = gr.routes.App.create_app(io)
+
+app.mount('/', gradio_app)
+
 @app.get("/ping")
 def ping_response():
     return jsonable_encoder({"status": "Server Running"})
+
+
+@app.get("/")
+def gradio_app():
+    return {"message": "This is your main app"}
 
 
 @app.post("/guess_hero")
