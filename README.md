@@ -34,3 +34,7 @@ The assumption is this constructed superhero `description` will have `rich infor
 * Docker  & Docker Compose <br>
 * GitHub Actions CI/CD - Deploy on AWS on Git Push <br>
 * Caddy - Reverse Proxy & Automatic SSL Certificate Generation and Verification <br>
+
+# API Input / Output:
+{`description`: "marvel comics, super strength, leader, avengers, super solider, strong, honest, brooklyn"} <br><br>
+{`Superhero_Guess`: [`Knockout`, `Captain America`]]}
